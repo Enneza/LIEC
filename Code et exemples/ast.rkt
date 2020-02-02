@@ -1,0 +1,74 @@
+#lang racket/base
+
+(provide (all-defined-out))
+
+;;; parsed syntax
+(struct Pnil (pos))
+(struct Pnum (n pos))
+(struct Pstr (s pos))
+(struct Pvar (v pos))
+(struct Pexpr (expr pos))
+(struct Passign (var expr pos))
+(struct Pcall (func args pos))
+
+;(struct Pcond (var expr pos))
+
+(struct Pbit (val pos) #:transparent)
+
+;;; types
+(struct Fun (ret args) #:transparent)
+(struct Pair (t)       #:transparent)
+
+;;; AST
+(struct Nil ())
+(struct Num (n))
+(struct Str (s))
+(struct Var (v))
+(struct Expr (e))
+(struct Assign (var expr))
+(struct Call (func args))
+(struct Data (l))
+
+(struct Bit (val)#:transparent)
+
+;(struct Cond (var expr))
+
+;;; MIPS
+(struct Mips (data text))
+
+; instructions
+(struct Asciiz (lbl str))
+(struct Label (lbl))
+(struct Li (dst imm))
+(struct La (dst loc))
+(struct Addi (dst reg imm))
+(struct Add (dst rg1 rg2))
+
+						; Modifications pour - * / 
+(struct Sub (dst rg1 rg2)#:transparent)
+(struct Mul (dst rg1 rg2)#:transparent)
+(struct Div (dst rg1 rg2)#:transparent)
+
+(struct Beq (dst rg1 rg2)#:transparent)
+(struct Eql (dst rg1 rg2)#:transparent)
+(struct Neq (dst rg1 rg2)#:transparent)
+(struct Lt (dst rg1 rg2)#:transparent)
+(struct Gt (dst rg1 rg2)#:transparent)
+(struct Lte (dst rg1 rg2)#:transparent)
+(struct Gte (dst rg1 rg2)#:transparent)
+
+(struct Sw (reg loc))
+(struct Lw (reg loc))
+(struct Move (dst reg))
+(struct Syscall ())
+(struct Jal (loc))
+(struct Jr (reg))
+
+; locations
+(struct Mem (reg offset))
+(struct Lbl (name))
+
+; contants
+(define PRINT_INT    1)
+(define PRINT_STRING 4)
+(define SBRK         9)
